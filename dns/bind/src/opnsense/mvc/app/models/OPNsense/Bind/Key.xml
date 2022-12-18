@@ -27,7 +27,7 @@
                 <secret type="TextField">
                     <Required>Y</Required>
                     <default></default>
-                </key>
+                </secret>
             </key>
         </keys>
     </items>
