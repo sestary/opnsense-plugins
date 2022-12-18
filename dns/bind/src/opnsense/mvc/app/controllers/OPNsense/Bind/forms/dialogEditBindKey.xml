@@ -1,0 +1,26 @@
+<form>
+    <field>
+        <id>key.enabled</id>
+        <label>Enabled</label>
+        <type>checkbox</type>
+        <help>This will enable or disable the Key.</help>
+    </field>
+    <field>
+        <id>key.name</id>
+        <label>Name</label>
+        <type>text</type>
+        <help>Set the name for this Key.</help>
+    </field>
+    <field>
+        <id>key.algo</id>
+        <label>Algorithm</label>
+        <type>dropdown</type>
+        <help>Set the authentication algorithm for the TSIG key.</help>
+    </field>
+    <field>
+        <id>key.key</id>
+        <label>Key</label>
+        <type>text</type>
+        <help>The base64-encoded TSIG key.</help>
+    </field>
+</form>

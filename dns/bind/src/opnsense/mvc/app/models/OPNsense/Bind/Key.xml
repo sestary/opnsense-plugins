@@ -1,0 +1,34 @@
+<model>
+    <mount>//OPNsense/bind/key</mount>
+    <description>BIND Key configuration</description>
+    <version>1.0.1</version>
+    <items>
+        <keys>
+            <key type="ArrayField">
+                <enabled type="BooleanField">
+                    <default>1</default>
+                    <Required>Y</Required>
+                </enabled>
+                <algo type="OptionField">
+                    <Required>N</Required>
+                    <OptionValues>
+                        <hmac-sha512>HMAC-SHA512</hmac-sha512>
+                        <hmac-sha384>HMAC-SHA384</hmac-sha384>
+                        <hmac-sha256>HMAC-SHA256</hmac-sha256>
+                        <hmac-sha224>HMAC-SHA224</hmac-sha224>
+                        <hmac-sha1>HMAC-SHA1</hmac-sha1>
+                        <hmac-md5>HMAC-MD5</hmac-md5>
+                    </OptionValues>
+                </algo>
+                <name type="TextField">
+                    <Required>Y</Required>
+                    <default></default>
+                </name>
+                <key type="TextField">
+                    <Required>Y</Required>
+                    <default></default>
+                </key>
+            </key>
+        </keys>
+    </items>
+</model>
