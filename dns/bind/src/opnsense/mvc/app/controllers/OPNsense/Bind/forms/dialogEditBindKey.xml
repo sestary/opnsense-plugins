@@ -18,8 +18,8 @@
         <help>Set the authentication algorithm for the TSIG key.</help>
     </field>
     <field>
-        <id>key.key</id>
-        <label>Key</label>
+        <id>key.secret</id>
+        <label>Secret</label>
         <type>text</type>
         <help>The base64-encoded TSIG key.</help>
     </field>
