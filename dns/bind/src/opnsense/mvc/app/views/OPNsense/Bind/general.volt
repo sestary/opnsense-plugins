@@ -57,7 +57,7 @@ POSSIBILITY OF SUCH DAMAGE.
         </div>
     </div>
     <div id="keys" class="tab-pane fade in">
-        <table id="grid-acls" class="table table-condensed table-hover table-striped table-responsive" data-editDialog="dialogEditBindKey">
+        <table id="grid-keys" class="table table-condensed table-hover table-striped table-responsive" data-editDialog="dialogEditBindKey">
             <thead>
                 <tr>
                     <th data-column-id="enabled" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
