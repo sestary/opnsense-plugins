@@ -63,7 +63,7 @@ POSSIBILITY OF SUCH DAMAGE.
                     <th data-column-id="enabled" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
                     <th data-column-id="name" data-type="string" data-visible="true">{{ lang._('Name') }}</th>
                     <th data-column-id="algo" data-type="string" data-visible="true">{{ lang._('Algorithm') }}</th>
-                    <th data-column-id="key" data-type="string" data-identifier="true" data-visible="false">{{ lang._('Key') }}</th>
+                    <th data-column-id="secret" data-type="string" data-identifier="true" data-visible="false">{{ lang._('Key') }}</th>
                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
                 </tr>
             </thead>

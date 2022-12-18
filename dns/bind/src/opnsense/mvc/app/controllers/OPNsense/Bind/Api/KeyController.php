@@ -39,7 +39,7 @@ class KeyController extends ApiMutableModelControllerBase
 
     public function searchKeyAction()
     {
-        return $this->searchBase('keys.key', array("enabled", "name", "algo", "key"));
+        return $this->searchBase('keys.key', array("enabled", "name", "algo", "secret"));
     }
     public function getKeyAction($uuid = null)
     {
