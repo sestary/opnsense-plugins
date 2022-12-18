@@ -32,7 +32,7 @@ namespace OPNsense\Bind\Api;
 
 use OPNsense\Base\ApiMutableModelControllerBase;
 
-class AclController extends ApiMutableModelControllerBase
+class KeyController extends ApiMutableModelControllerBase
 {
     protected static $internalModelName = 'key';
     protected static $internalModelClass = '\OPNsense\Bind\Key';
