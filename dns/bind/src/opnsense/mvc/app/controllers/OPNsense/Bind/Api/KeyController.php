@@ -37,28 +37,28 @@ class KeyController extends ApiMutableModelControllerBase
     protected static $internalModelName = 'key';
     protected static $internalModelClass = '\OPNsense\Bind\Key';
 
-    public function searchAclAction()
+    public function searchKeyAction()
     {
         return $this->searchBase('keys.key', array("enabled", "name", "algo", "key"));
     }
-    public function getAclAction($uuid = null)
+    public function getKeyAction($uuid = null)
     {
         $this->sessionClose();
         return $this->getBase('key', 'keys.key', $uuid);
     }
-    public function addAclAction()
+    public function addKeyAction()
     {
         return $this->addBase('key', 'keys.key');
     }
-    public function delAclAction($uuid)
+    public function delKeyAction($uuid)
     {
         return $this->delBase('keys.key', $uuid);
     }
-    public function setAclAction($uuid)
+    public function setKeyAction($uuid)
     {
         return $this->setBase('key', 'keys.key', $uuid);
     }
-    public function toggleAclAction($uuid)
+    public function toggleKeyAction($uuid)
     {
         return $this->toggleBase('keys.key', $uuid);
     }

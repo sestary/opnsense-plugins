@@ -81,7 +81,7 @@ POSSIBILITY OF SUCH DAMAGE.
         </table>
         <div class="col-md-12">
             <hr />
-            <button class="btn btn-primary" id="saveAct_acl" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_acl_progress"></i></button>
+            <button class="btn btn-primary" id="saveAct_key" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_key_progress"></i></button>
             <br /><br />
         </div>
     </div>
@@ -235,6 +235,7 @@ POSSIBILITY OF SUCH DAMAGE.
 </div>
 
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindAcl,'id':'dialogEditBindAcl','label':lang._('Edit ACL')])}}
+{{ partial("layout_partials/base_dialog",['fields':formDialogEditBindKey,'id':'dialogEditBindKey','label':lang._('Edit Key')])}}
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindPrimaryDomain,'id':'dialogEditBindPrimaryDomain','label':lang._('Edit Primary Zone')])}}
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindSecondaryDomain,'id':'dialogEditBindSecondaryDomain','label':lang._('Edit Secondary Zone')])}}
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindRecord,'id':'dialogEditBindRecord','label':lang._('Edit Record')])}}
@@ -262,6 +263,16 @@ $( document ).ready(function() {
             'add':'/api/bind/acl/addAcl/',
             'del':'/api/bind/acl/delAcl/',
             'toggle':'/api/bind/acl/toggleAcl/'
+        }
+    );
+
+    $("#grid-keys").UIBootgrid(
+        {   'search':'/api/bind/key/searchKey',
+            'get':'/api/bind/key/getKey/',
+            'set':'/api/bind/key/setKey/',
+            'add':'/api/bind/key/addKey/',
+            'del':'/api/bind/key/delKey/',
+            'toggle':'/api/bind/key/toggleKey/'
         }
     );
 
@@ -377,6 +388,7 @@ $( document ).ready(function() {
             });
         });
     });
+
     $(".saveAct_domain").click(function(){
         $(".saveAct_domain_progress").addClass("fa fa-spinner fa-pulse");
         ajaxCall("/api/bind/service/reconfigure", {}, function(data,status) {
