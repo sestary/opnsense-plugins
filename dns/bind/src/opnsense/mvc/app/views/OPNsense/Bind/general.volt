@@ -87,7 +87,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <div class="col-md-12">
                 <h2>{{ lang._('RNDC Key') }}</h2>
             </div>
-            {{ partial("layout_partials/base_form",['fields':rndcKeyForm,'id':'frm_rndc_key_settings'])}}
+            {{ partial("layout_partials/base_form",['fields':RNDCKeyForm,'id':'frm_general_settings'])}}
         </div>
         <div class="col-md-12">
             <div id="ChangeMessage" class="alert alert-info" style="display: none" role="alert">
