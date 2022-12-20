@@ -90,12 +90,8 @@ POSSIBILITY OF SUCH DAMAGE.
             {{ partial("layout_partials/base_form",['fields':rndcKeyForm,'id':'frm_general_settings'])}}
         </div>
         <div class="col-md-12">
-            <div id="ChangeMessage" class="alert alert-info" style="display: none" role="alert">
-                {{ lang._('After changing settings, please remember to apply them with the button below') }}
-            </div>
             <hr />
             <button class="btn btn-primary" id="saveApplyAct" type="button"><b>{{ lang._('Save & Apply') }}</b> <i id="saveApplyAct_progress"></i></button>
-            <br /><br />
         </div>
     </div>
     <div id="acls" class="tab-pane fade in">

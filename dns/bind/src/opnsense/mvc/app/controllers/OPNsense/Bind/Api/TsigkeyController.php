@@ -39,7 +39,7 @@ class TsigkeyController extends ApiMutableModelControllerBase
 
     public function searchKeyAction()
     {
-        return $this->searchBase('tsig_tsig_keys.tsig_key', array("enabled", "name", "algo", "secret"));
+        return $this->searchBase('tsig_keys.tsig_key', array("enabled", "name", "algo", "secret"));
     }
     public function getKeyAction($uuid = null)
     {
