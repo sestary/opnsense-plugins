@@ -43,7 +43,7 @@ POSSIBILITY OF SUCH DAMAGE.
             {{ partial("layout_partials/base_form",['fields':generalForm,'id':'frm_general_settings'])}}
             <div class="col-md-12">
                 <hr />
-                <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_progress"></i></button>
+                <button class="btn btn-primary" id="saveApplyAct" type="button"><b>{{ lang._('Save & Apply') }}</b> <i id="saveApplyAct_progress"></i></button>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@ POSSIBILITY OF SUCH DAMAGE.
             {{ partial("layout_partials/base_form",['fields':dnsblForm,'id':'frm_dnsbl_settings'])}}
             <div class="col-md-12">
                 <hr />
-                <button class="btn btn-primary" id="saveAct_dnsbl" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_dnsbl_progress"></i></button>
+                <button class="btn btn-primary" id="saveApplyAct_dnsbl" type="button"><b>{{ lang._('Save & Apply') }}</b> <i id="saveApplyAct_dnsbl_progress"></i></button>
             </div>
         </div>
     </div>
@@ -94,7 +94,7 @@ POSSIBILITY OF SUCH DAMAGE.
                 {{ lang._('After changing settings, please remember to apply them with the button below') }}
             </div>
             <hr />
-            <button class="btn btn-primary" id="saveAct_key" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_key_progress"></i></button>
+            <button class="btn btn-primary" id="saveApplyAct_key" type="button"><b>{{ lang._('Save & Apply') }}</b> <i id="saveApplyAct_key_progress"></i></button>
             <br /><br />
         </div>
     </div>
@@ -123,7 +123,7 @@ POSSIBILITY OF SUCH DAMAGE.
         </table>
         <div class="col-md-12">
             <hr />
-            <button class="btn btn-primary" id="saveAct_acl" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_acl_progress"></i></button>
+            <button class="btn btn-primary" id="applyAct_acl" type="button"><b>{{ lang._('Apply') }}</b> <i id="applyAct_acl_progress"></i></button>
             <br /><br />
         </div>
     </div>
@@ -206,7 +206,7 @@ POSSIBILITY OF SUCH DAMAGE.
                 {{ lang._('After changing settings, please remember to apply them with the button below') }}
             </div>
             <hr />
-            <button class="btn btn-primary saveAct_domain" type="button"><b>{{ lang._('Save') }}</b> <i class="saveAct_domain_progress"></i></button>
+            <button class="btn btn-primary applyAct_domain" type="button"><b>{{ lang._('Apply') }}</b> <i class="applyAct_domain_progress"></i></button>
             <br /><br />
         </div>
     </div>
@@ -241,7 +241,7 @@ POSSIBILITY OF SUCH DAMAGE.
                 {{ lang._('After changing settings, please remember to apply them with the button below') }}
             </div>
             <hr />
-            <button class="btn btn-primary saveAct_domain" type="button"><b>{{ lang._('Save') }}</b> <i class="saveAct_domain_progress"></i></button>
+            <button class="btn btn-primary applyAct_domain" type="button"><b>{{ lang._('Apply') }}</b> <i class="applyAct_domain_progress"></i></button>
             <br /><br />
         </div>
     </div>
@@ -360,34 +360,33 @@ $( document ).ready(function() {
         }
     });
 
-    $("#saveAct").click(function(){
+    $("#saveApplyAct").click(function(){
         saveFormToEndpoint(url="/api/bind/general/set", formid='frm_general_settings',callback_ok=function(){
-        $("#saveAct_progress").addClass("fa fa-spinner fa-pulse");
+        $("#saveApplyAct_progress").addClass("fa fa-spinner fa-pulse");
             ajaxCall(url="/api/bind/service/reconfigure", sendData={}, callback=function(data,status) {
                 updateServiceControlUI('bind');
-                $("#saveAct_progress").removeClass("fa fa-spinner fa-pulse");
+                $("#saveApplyAct_progress").removeClass("fa fa-spinner fa-pulse");
             });
         });
     });
 
-    $("#saveAct_dnsbl").click(function(){
+    $("#saveApplyAct_dnsbl").click(function(){
         saveFormToEndpoint(url="/api/bind/dnsbl/set", formid='frm_dnsbl_settings',callback_ok=function(){
-        $("#saveAct_dnsbl_progress").addClass("fa fa-spinner fa-pulse");
+        $("#saveApplyAct_dnsbl_progress").addClass("fa fa-spinner fa-pulse");
             ajaxCall(url="/api/bind/service/dnsbl", sendData={}, callback=function(data,status) {
                 ajaxCall(url="/api/bind/service/reconfigure", sendData={}, callback=function(data,status) {
                     updateServiceControlUI('bind');
-                    $("#saveAct_dnsbl_progress").removeClass("fa fa-spinner fa-pulse");
+                    $("#saveApplyAct_dnsbl_progress").removeClass("fa fa-spinner fa-pulse");
                 });
             });
         });
     });
 
-    $("#saveAct_acl").click(function(){
-        saveFormToEndpoint(url="/api/bind/acl/set", formid='frm_general_settings',callback_ok=function(){
-            $("#saveAct_acl_progress").addClass("fa fa-spinner fa-pulse");
+    $("#applyAct_acl").click(function(){
+        $("#applyAct_acl_progress").addClass("fa fa-spinner fa-pulse");
             ajaxCall(url="/api/bind/service/reconfigure", sendData={}, callback=function(data,status) {
                 updateServiceControlUI('bind');
-                $("#saveAct_acl_progress").removeClass("fa fa-spinner fa-pulse");
+                $("#applyAct_acl_progress").removeClass("fa fa-spinner fa-pulse");
             });
         });
     });
@@ -402,8 +401,8 @@ $( document ).ready(function() {
         });
     });
 
-    $(".saveAct_domain").click(function(){
-        $(".saveAct_domain_progress").addClass("fa fa-spinner fa-pulse");
+    $(".applyAct_domain").click(function(){
+        $(".applyAct_domain_progress").addClass("fa fa-spinner fa-pulse");
         ajaxCall("/api/bind/service/reconfigure", {}, function(data,status) {
             updateServiceControlUI('bind');
             $(".saveAct_domain_progress").removeClass("fa fa-spinner fa-pulse");
