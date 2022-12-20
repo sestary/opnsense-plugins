@@ -32,10 +32,10 @@ namespace OPNsense\Bind\Api;
 
 use OPNsense\Base\ApiMutableModelControllerBase;
 
-class TSIGKeyController extends ApiMutableModelControllerBase
+class TsigkeyController extends ApiMutableModelControllerBase
 {
     protected static $internalModelName = 'tsig_key';
-    protected static $internalModelClass = '\OPNsense\Bind\TSIGKey';
+    protected static $internalModelClass = '\OPNsense\Bind\Tsigkey';
 
     public function searchKeyAction()
     {
