@@ -1,5 +1,5 @@
 <model>
-    <mount>//OPNsense/bind/tsig_key</mount>
+    <mount>//OPNsense/bind/tsigkey</mount>
     <description>BIND TSIG Key configuration</description>
     <version>1.0.0</version>
     <items>

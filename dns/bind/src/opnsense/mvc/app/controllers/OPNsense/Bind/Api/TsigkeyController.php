@@ -34,7 +34,7 @@ use OPNsense\Base\ApiMutableModelControllerBase;
 
 class TsigkeyController extends ApiMutableModelControllerBase
 {
-    protected static $internalModelName = 'tsig_key';
+    protected static $internalModelName = 'tsigkey';
     protected static $internalModelClass = '\OPNsense\Bind\Tsigkey';
 
     public function searchKeyAction()
