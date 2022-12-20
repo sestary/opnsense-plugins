@@ -87,14 +87,14 @@ POSSIBILITY OF SUCH DAMAGE.
             <div class="col-md-12">
                 <h2>{{ lang._('RNDC Key') }}</h2>
             </div>
-            {{ partial("layout_partials/base_form",['fields':RNDCKeyForm,'id':'frm_general_settings'])}}
+            {{ partial("layout_partials/base_form",['fields':rndcKeyForm,'id':'frm_general_settings'])}}
         </div>
         <div class="col-md-12">
             <div id="ChangeMessage" class="alert alert-info" style="display: none" role="alert">
                 {{ lang._('After changing settings, please remember to apply them with the button below') }}
             </div>
             <hr />
-            <button class="btn btn-primary" id="saveApplyAct_key" type="button"><b>{{ lang._('Save & Apply') }}</b> <i id="saveApplyAct_key_progress"></i></button>
+            <button class="btn btn-primary" id="saveApplyAct" type="button"><b>{{ lang._('Save & Apply') }}</b> <i id="saveApplyAct_progress"></i></button>
             <br /><br />
         </div>
     </div>
