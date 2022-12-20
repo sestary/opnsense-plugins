@@ -384,10 +384,9 @@ $( document ).ready(function() {
 
     $("#applyAct_acl").click(function(){
         $("#applyAct_acl_progress").addClass("fa fa-spinner fa-pulse");
-            ajaxCall(url="/api/bind/service/reconfigure", sendData={}, callback=function(data,status) {
-                updateServiceControlUI('bind');
-                $("#applyAct_acl_progress").removeClass("fa fa-spinner fa-pulse");
-            });
+        ajaxCall(url="/api/bind/service/reconfigure", sendData={}, callback=function(data,status) {
+            updateServiceControlUI('bind');
+            $("#applyAct_acl_progress").removeClass("fa fa-spinner fa-pulse");
         });
     });
 
