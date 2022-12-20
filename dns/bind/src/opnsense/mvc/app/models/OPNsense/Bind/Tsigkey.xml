@@ -10,7 +10,7 @@
                     <Required>Y</Required>
                 </enabled>
                 <algo type="OptionField">
-                    <Required>N</Required>
+                    <Required>Y</Required>
                     <OptionValues>
                         <hmac-sha512>HMAC-SHA512</hmac-sha512>
                         <hmac-sha384>HMAC-SHA384</hmac-sha384>

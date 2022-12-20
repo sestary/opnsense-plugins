@@ -43,7 +43,7 @@ POSSIBILITY OF SUCH DAMAGE.
             {{ partial("layout_partials/base_form",['fields':generalForm,'id':'frm_general_settings'])}}
             <div class="col-md-12">
                 <hr />
-                <button class="btn btn-primary" id="saveApplyAct" type="button"><b>{{ lang._('Save & Apply') }}</b> <i id="saveApplyAct_progress"></i></button>
+                <button class="btn btn-primary saveApplyAct" type="button"><b>{{ lang._('Save & Apply') }}</b> <i class="saveApplyAct_progress"></i></button>
             </div>
         </div>
     </div>
@@ -91,7 +91,7 @@ POSSIBILITY OF SUCH DAMAGE.
         </div>
         <div class="col-md-12">
             <hr />
-            <button class="btn btn-primary" id="saveApplyAct" type="button"><b>{{ lang._('Save & Apply') }}</b> <i id="saveApplyAct_progress"></i></button>
+            <button class="btn btn-primary saveApplyAct" type="button"><b>{{ lang._('Save & Apply') }}</b> <i class="saveApplyAct_progress"></i></button>
         </div>
     </div>
     <div id="acls" class="tab-pane fade in">
@@ -356,12 +356,12 @@ $( document ).ready(function() {
         }
     });
 
-    $("#saveApplyAct").click(function(){
+    $(".saveApplyAct").click(function(){
         saveFormToEndpoint(url="/api/bind/general/set", formid='frm_general_settings',callback_ok=function(){
-        $("#saveApplyAct_progress").addClass("fa fa-spinner fa-pulse");
+        $(".saveApplyAct_progress").addClass("fa fa-spinner fa-pulse");
             ajaxCall(url="/api/bind/service/reconfigure", sendData={}, callback=function(data,status) {
                 updateServiceControlUI('bind');
-                $("#saveApplyAct_progress").removeClass("fa fa-spinner fa-pulse");
+                $(".saveApplyAct_progress").removeClass("fa fa-spinner fa-pulse");
             });
         });
     });
