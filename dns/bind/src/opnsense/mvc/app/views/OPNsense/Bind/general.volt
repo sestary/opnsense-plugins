@@ -279,13 +279,13 @@ $( document ).ready(function() {
         }
     );
 
-    $("#grid-keys").UIBootgrid(
-        {   'search':'/api/bind/key/searchKey',
-            'get':'/api/bind/key/getKey/',
-            'set':'/api/bind/key/setKey/',
-            'add':'/api/bind/key/addKey/',
-            'del':'/api/bind/key/delKey/',
-            'toggle':'/api/bind/key/toggleKey/'
+    $("#grid-tsigkeys").UIBootgrid(
+        {   'search':'/api/bind/tsigkey/searchKey',
+            'get':'/api/bind/tsigkey/getKey/',
+            'set':'/api/bind/tsigkey/setKey/',
+            'add':'/api/bind/tsigkey/addKey/',
+            'del':'/api/bind/tsigkey/delKey/',
+            'toggle':'/api/bind/tsigkey/toggleKey/'
         }
     );
 
