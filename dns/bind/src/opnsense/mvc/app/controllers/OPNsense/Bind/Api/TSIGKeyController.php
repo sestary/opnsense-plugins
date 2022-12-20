@@ -32,34 +32,34 @@ namespace OPNsense\Bind\Api;
 
 use OPNsense\Base\ApiMutableModelControllerBase;
 
-class KeyController extends ApiMutableModelControllerBase
+class TSIGKeyController extends ApiMutableModelControllerBase
 {
-    protected static $internalModelName = 'key';
-    protected static $internalModelClass = '\OPNsense\Bind\Key';
+    protected static $internalModelName = 'tsig_key';
+    protected static $internalModelClass = '\OPNsense\Bind\TSIGKey';
 
     public function searchKeyAction()
     {
-        return $this->searchBase('keys.key', array("enabled", "name", "algo", "secret"));
+        return $this->searchBase('tsig_tsig_keys.tsig_key', array("enabled", "name", "algo", "secret"));
     }
     public function getKeyAction($uuid = null)
     {
         $this->sessionClose();
-        return $this->getBase('key', 'keys.key', $uuid);
+        return $this->getBase('tsig_key', 'tsig_keys.tsig_key', $uuid);
     }
     public function addKeyAction()
     {
-        return $this->addBase('key', 'keys.key');
+        return $this->addBase('tsig_key', 'tsig_keys.tsig_key');
     }
     public function delKeyAction($uuid)
     {
-        return $this->delBase('keys.key', $uuid);
+        return $this->delBase('tsig_keys.tsig_key', $uuid);
     }
     public function setKeyAction($uuid)
     {
-        return $this->setBase('key', 'keys.key', $uuid);
+        return $this->setBase('tsig_key', 'tsig_keys.tsig_key', $uuid);
     }
     public function toggleKeyAction($uuid)
     {
-        return $this->toggleBase('keys.key', $uuid);
+        return $this->toggleBase('tsig_keys.tsig_key', $uuid);
     }
 }
