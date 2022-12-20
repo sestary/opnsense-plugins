@@ -1,10 +1,10 @@
 <model>
-    <mount>//OPNsense/bind/key</mount>
-    <description>BIND Key configuration</description>
-    <version>1.0.1</version>
+    <mount>//OPNsense/bind/tsig_key</mount>
+    <description>BIND TSIG Key configuration</description>
+    <version>1.0.0</version>
     <items>
-        <keys>
-            <key type="ArrayField">
+        <tsig_keys>
+            <tsig_key type="ArrayField">
                 <enabled type="BooleanField">
                     <default>1</default>
                     <Required>Y</Required>
@@ -28,7 +28,7 @@
                     <Required>Y</Required>
                     <default></default>
                 </secret>
-            </key>
-        </keys>
+            </tsig_key>
+        </tsig_keys>
     </items>
 </model>

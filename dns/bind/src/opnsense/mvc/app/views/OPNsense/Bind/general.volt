@@ -57,7 +57,10 @@ POSSIBILITY OF SUCH DAMAGE.
         </div>
     </div>
     <div id="keys" class="tab-pane fade in">
-        <table id="grid-keys" class="table table-condensed table-hover table-striped table-responsive" data-editDialog="dialogEditBindKey">
+        <div class="col-md-12">
+            <h2>{{ lang._('TSIG Keys') }}</h2>
+        </div>
+        <table id="grid-tsigkeys" class="table table-condensed table-hover table-striped table-responsive" data-editDialog="dialogEditBindTSIGKey">
             <thead>
                 <tr>
                     <th data-column-id="enabled" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
@@ -79,7 +82,17 @@ POSSIBILITY OF SUCH DAMAGE.
                 </tr>
             </tfoot>
         </table>
+        <hr/>
+        <div class="content-box">
+            <div class="col-md-12">
+                <h2>{{ lang._('RNDC Key') }}</h2>
+            </div>
+            {{ partial("layout_partials/base_form",['fields':rndcKeyForm,'id':'frm_rndc_key_settings'])}}
+        </div>
         <div class="col-md-12">
+            <div id="ChangeMessage" class="alert alert-info" style="display: none" role="alert">
+                {{ lang._('After changing settings, please remember to apply them with the button below') }}
+            </div>
             <hr />
             <button class="btn btn-primary" id="saveAct_key" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_key_progress"></i></button>
             <br /><br />
@@ -235,7 +248,7 @@ POSSIBILITY OF SUCH DAMAGE.
 </div>
 
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindAcl,'id':'dialogEditBindAcl','label':lang._('Edit ACL')])}}
-{{ partial("layout_partials/base_dialog",['fields':formDialogEditBindKey,'id':'dialogEditBindKey','label':lang._('Edit Key')])}}
+{{ partial("layout_partials/base_dialog",['fields':formDialogEditBindTSIGKey,'id':'dialogEditBindTSIGKey','label':lang._('Edit TSIG Key')])}}
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindPrimaryDomain,'id':'dialogEditBindPrimaryDomain','label':lang._('Edit Primary Zone')])}}
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindSecondaryDomain,'id':'dialogEditBindSecondaryDomain','label':lang._('Edit Secondary Zone')])}}
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindRecord,'id':'dialogEditBindRecord','label':lang._('Edit Record')])}}

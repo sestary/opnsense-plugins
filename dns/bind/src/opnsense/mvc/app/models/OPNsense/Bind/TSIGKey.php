@@ -26,6 +26,6 @@ namespace OPNsense\Bind;
 
 use OPNsense\Base\BaseModel;
 
-class Key extends BaseModel
+class TSIGKey extends BaseModel
 {
 }
