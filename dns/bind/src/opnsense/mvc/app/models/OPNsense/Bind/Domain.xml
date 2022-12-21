@@ -58,9 +58,20 @@
                             <display>name</display>
                         </template>
                     </Model>
-                    <Multiple>N</Multiple>
+                    <Multiple>Y</Multiple>
                     <Required>N</Required>
                 </allowtransfer>
+                <allowtransfertsigkey type="ModelRelationField">
+                    <Model>
+                        <template>
+                            <source>OPNsense.Bind.Tsigkey</source>
+                            <items>keys.key</items>
+                            <display>name, algo</display>
+                        </template>
+                    </Model>
+                    <Multiple>Y</Multiple>
+                    <Required>N</Required>
+                </allowtransfertsigkey>
                 <allowquery type="ModelRelationField">
                     <Model>
                         <template>
