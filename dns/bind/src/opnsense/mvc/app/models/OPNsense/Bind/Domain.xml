@@ -65,7 +65,7 @@
                     <Model>
                         <template>
                             <source>OPNsense.Bind.Tsigkey</source>
-                            <items>keys.key</items>
+                            <items>tsig_keys.tsig_key</items>
                             <display>name, algo</display>
                         </template>
                     </Model>
