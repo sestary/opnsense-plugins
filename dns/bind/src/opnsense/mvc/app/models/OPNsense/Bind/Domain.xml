@@ -1,7 +1,7 @@
 <model>
     <mount>//OPNsense/bind/domain</mount>
     <description>BIND domain configuration</description>
-    <version>1.1.0</version>
+    <version>1.1.2</version>
     <items>
         <domains>
             <domain type="ArrayField">
@@ -22,25 +22,17 @@
                     <FieldSeparator>,</FieldSeparator>
                     <asList>Y</asList>
                 </primaryip>
-                <transferkeyalgo type="OptionField">
+                <primarytransfertsigkey type="ModelRelationField">
+                    <Model>
+                        <template>
+                            <source>OPNsense.Bind.Tsigkey</source>
+                            <items>tsig_keys.tsig_key</items>
+                            <display>name</display>
+                        </template>
+                    </Model>
+                    <Multiple>N</Multiple>
                     <Required>N</Required>
-                    <OptionValues>
-                        <hmac-sha512>HMAC-SHA512</hmac-sha512>
-                        <hmac-sha384>HMAC-SHA384</hmac-sha384>
-                        <hmac-sha256>HMAC-SHA256</hmac-sha256>
-                        <hmac-sha224>HMAC-SHA224</hmac-sha224>
-                        <hmac-sha1>HMAC-SHA1</hmac-sha1>
-                        <hmac-md5>HMAC-MD5</hmac-md5>
-                    </OptionValues>
-                </transferkeyalgo>
-                <transferkeyname type="TextField">
-                    <Required>N</Required>
-                    <default></default>
-                </transferkeyname>
-                <transferkey type="TextField">
-                    <Required>N</Required>
-                    <default></default>
-                </transferkey>
+                </primarytransfertsigkey>
                 <allownotifysecondary type="NetworkField">
                     <Required>N</Required>
                     <FieldSeparator>,</FieldSeparator>
