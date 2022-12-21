@@ -58,7 +58,7 @@
                             <display>name</display>
                         </template>
                     </Model>
-                    <Multiple>Y</Multiple>
+                    <Multiple>N</Multiple>
                     <Required>N</Required>
                 </allowtransfer>
                 <allowtransfertsigkey type="ModelRelationField">
@@ -69,7 +69,7 @@
                             <display>name, algo</display>
                         </template>
                     </Model>
-                    <Multiple>Y</Multiple>
+                    <Multiple>N</Multiple>
                     <Required>N</Required>
                 </allowtransfertsigkey>
                 <allowquery type="ModelRelationField">
