@@ -92,6 +92,7 @@ POSSIBILITY OF SUCH DAMAGE.
         <div class="col-md-12">
             <hr />
             <button class="btn btn-primary saveApplyAct" type="button"><b>{{ lang._('Save & Apply') }}</b> <i class="saveApplyAct_progress"></i></button>
+            <br /><br />
         </div>
     </div>
     <div id="acls" class="tab-pane fade in">

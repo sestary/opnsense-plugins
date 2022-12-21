@@ -18,6 +18,12 @@
         <help>Define an ACL where you allow which server can retrieve this zone.</help>
     </field>
     <field>
+        <id>domain.allowtransfertsigkey</id>
+        <label>Allow Transfer with TSIG Key</label>
+        <type>dropdown</type>
+        <help>Define the TSIG Keys where you allow which keys can retrieve this zone.</help>
+    </field>
+    <field>
         <id>domain.allowquery</id>
         <label>Allow Query</label>
         <type>dropdown</type>
