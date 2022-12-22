@@ -401,7 +401,7 @@ $( document ).ready(function() {
         $(".applyAct_domain_progress").addClass("fa fa-spinner fa-pulse");
         ajaxCall("/api/bind/service/reconfigure", {}, function(data,status) {
             updateServiceControlUI('bind');
-            $(".saveAct_domain_progress").removeClass("fa fa-spinner fa-pulse");
+            $(".applyAct_domain_progress").removeClass("fa fa-spinner fa-pulse");
         });
     });
 
