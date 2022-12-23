@@ -61,7 +61,8 @@ class Tsigkey1_0_0 extends BaseModelMigration
 
         if (!empty($bindConfig->domain->domains->domain)) {
             foreach ($bindConfig->domain->domains->domain as $domain) {
-                echo "Domain $domain found";
+                echo "Domain $domain->domainname found";
+                echo $domain->transferkeyname;
                     if (!empty($domain->transferkeyname)) {
                     echo "Transfer key isn't empty";
                         if (!in_array($domain->transferkeyname, $keyNames)){
