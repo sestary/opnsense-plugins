@@ -41,6 +41,8 @@ class Tsigkey1_0_0 extends BaseModelMigration
     */
     public function run($model)
     {
+        print_r($model)
+
         $config = Config::getInstance()->object();
 
         if (empty($config->OPNsense->bind)) {
@@ -55,11 +57,15 @@ class Tsigkey1_0_0 extends BaseModelMigration
                 array_push($keyNames, $key->name);
             }
         }
+        print_r($keyNames)
 
         if (!empty($bindConfig->domain->domains->domain)) {
             foreach ($bindConfig->domain->domains->domain as $domain) {
-                if (!empty($domain->transferkeyname)) {
-                    if (!in_array($domain->transferkeyname, $keyNames)){
+                echo "Domain $domain found"
+                    if (!empty($domain->transferkeyname)) {
+                    echo "Transfer key isn't empty"
+                        if (!in_array($domain->transferkeyname, $keyNames)){
+                        echo "Didn't find the key name already"
                         $keyNode = $model->tsig_keys->tsig_key->add();
                         $keyNode->setNodes(
                             [
