@@ -49,7 +49,7 @@ class Tsigkey1_0_0 extends BaseModelMigration
 
         $bindConfig = $config->OPNsense->bind;
 
-        keyNames = []
+        $keyNames = [];
         if (!empty($bindConfig->tsigkey->tsig_keys->tsig_key)) {
             foreach ($bindConfig->tsigkey->tsig_keys->tsig_key as $key) {
                 array_push($keyNames, $key->name);
@@ -68,7 +68,7 @@ class Tsigkey1_0_0 extends BaseModelMigration
                                 'name' => $domain->transferkeyname,
                                 'secret' => $domain->transferkey,
                             ]
-                        )
+                        );
                     }
                 }
             }
