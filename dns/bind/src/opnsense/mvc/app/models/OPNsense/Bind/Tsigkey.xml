@@ -2,7 +2,6 @@
     <mount>//OPNsense/bind/tsigkey</mount>
     <description>BIND TSIG Key configuration</description>
     <version>1.0.0</version>
-    <migration_prefix>Tsigkey</migration_prefix>
     <items>
         <tsigkeys>
             <tsigkey type="ArrayField">
