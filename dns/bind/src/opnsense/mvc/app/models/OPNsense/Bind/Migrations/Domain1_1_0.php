@@ -44,7 +44,9 @@ class Domain1_1_0 extends BaseModelMigration
         print_r($model);
 
         $tsigkeyNames = [];
-        foreach (Tsigkey->iterateItems() as $tsigkey) {
+        $tsigHandle = (new \ReflectionClass(static::OPNsense\Bind\Tsigkey))->newInstance();
+
+        foreach ($tsigHandle->iterateItems() as $tsigkey) {
             print_r($tsigkey);
             array_push($tsigkeyNames, $tsigkey->name);
         }
@@ -60,7 +62,7 @@ class Domain1_1_0 extends BaseModelMigration
                     echo "Transfer key isn't empty";
                         if (!in_array($domain->transferkeyname, $keyNames)){
                         echo "Didn't find the key name already";
-                        $newtsigkey = Tsigkey->addbase(
+                        $newtsigkey = $tsigHandle->addbase(
                             [
                                 'enabled' => 1,
                                 'algo' => $domain->transferkeyalgo,
