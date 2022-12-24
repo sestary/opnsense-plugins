@@ -44,7 +44,7 @@ class Domain1_1_0 extends BaseModelMigration
         print_r($model);
 
         $tsigkeyNames = [];
-        $tsigHandle = (new \ReflectionClass(static::OPNsense\Bind\Tsigkey))->newInstance();
+        $tsigHandle = (new \ReflectionClass(static::\OPNsense\Bind\Tsigkey))->newInstance();
 
         foreach ($tsigHandle->iterateItems() as $tsigkey) {
             print_r($tsigkey);
