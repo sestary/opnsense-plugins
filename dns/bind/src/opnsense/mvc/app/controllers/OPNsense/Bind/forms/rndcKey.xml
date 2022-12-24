@@ -1,12 +1,12 @@
 <form>
     <field>
-        <id>general.rndc_algo</id>
+        <id>general.rndcalgo</id>
         <label>Algorithm</label>
         <type>dropdown</type>
         <help>Set the authentication algorithm for the RNDC key.</help>
     </field>
     <field>
-        <id>general.rndc_secret</id>
+        <id>general.rndcsecret</id>
         <label>Secret</label>
         <type>text</type>
         <help>The base64-encoded RNDC key.</help>

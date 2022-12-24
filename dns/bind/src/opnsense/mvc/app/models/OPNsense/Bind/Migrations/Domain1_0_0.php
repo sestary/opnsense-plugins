@@ -31,9 +31,9 @@
 namespace OPNsense\Bind\Migrations;
 
 use OPNsense\Base\BaseModelMigration;
-use OPNsense\Core\Config;
+use OPNsense\Bind\Tsigkey;
 
-class Tsigkey1_0_0 extends BaseModelMigration
+class Domain1_1_0 extends BaseModelMigration
 {
     /**
     * Migrate older keys into new model
@@ -43,21 +43,16 @@ class Tsigkey1_0_0 extends BaseModelMigration
     {
         print_r($model);
 
-        $config = Config::getInstance()->object();
-
-        if (empty($config->OPNsense->bind)) {
-            return;
+        $tsigkeyNames = [];
+        foreach (Tsigkey::iterateItems() as $tsigkey) {
+            print_r($tsigkey);
+            array_push($tsigkeyNames, $tsigkey->name);
         }
 
-        $bindConfig = $config->OPNsense->bind;
-
-        $keyNames = [];
-        if (!empty($bindConfig->tsigkey->tsig_keys->tsig_key)) {
-            foreach ($bindConfig->tsigkey->tsig_keys->tsig_key as $key) {
-                array_push($keyNames, $key->name);
-            }
-        }
         print_r($keyNames);
+
+        # Temporarily here for testing so the version number doesn't increase incase it does actually work
+        trigger_error("Test",E_USER_ERROR);
 
         if (!empty($bindConfig->domain->domains->domain)) {
             foreach ($bindConfig->domain->domains->domain as $domain) {
@@ -68,7 +63,7 @@ class Tsigkey1_0_0 extends BaseModelMigration
                     echo "Transfer key isn't empty";
                         if (!in_array($domain->transferkeyname, $keyNames)){
                         echo "Didn't find the key name already";
-                        $keyNode = $model->tsig_keys->tsig_key->add();
+                        $keyNode = $model->tsigkeys->tsigkey->add();
                         $keyNode->setNodes(
                             [
                                 'enabled' => 1,
@@ -84,7 +79,5 @@ class Tsigkey1_0_0 extends BaseModelMigration
             }
         }
 
-        # Temporarily here for testing so the version number doesn't increase incase it does actually work
-        trigger_error("Test",E_USER_ERROR);
     }
 }

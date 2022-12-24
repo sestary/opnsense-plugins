@@ -4,8 +4,8 @@
     <version>1.0.0</version>
     <migration_prefix>Tsigkey</migration_prefix>
     <items>
-        <tsig_keys>
-            <tsig_key type="ArrayField">
+        <tsigkeys>
+            <tsigkey type="ArrayField">
                 <enabled type="BooleanField">
                     <default>1</default>
                     <Required>Y</Required>
@@ -29,7 +29,7 @@
                     <Required>Y</Required>
                     <default></default>
                 </secret>
-            </tsig_key>
-        </tsig_keys>
+            </tsigkey>
+        </tsigkeys>
     </items>
 </model>
