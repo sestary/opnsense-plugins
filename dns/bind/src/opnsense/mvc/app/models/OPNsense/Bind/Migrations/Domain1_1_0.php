@@ -44,15 +44,12 @@ class Domain1_1_0 extends BaseModelMigration
         print_r($model);
 
         $tsigkeyNames = [];
-        foreach (Tsigkey::iterateItems() as $tsigkey) {
+        foreach (Tsigkey->iterateItems() as $tsigkey) {
             print_r($tsigkey);
             array_push($tsigkeyNames, $tsigkey->name);
         }
 
         print_r($keyNames);
-
-        # Temporarily here for testing so the version number doesn't increase incase it does actually work
-        trigger_error("Test",E_USER_ERROR);
 
         if (!empty($bindConfig->domain->domains->domain)) {
             foreach ($bindConfig->domain->domains->domain as $domain) {
@@ -63,8 +60,7 @@ class Domain1_1_0 extends BaseModelMigration
                     echo "Transfer key isn't empty";
                         if (!in_array($domain->transferkeyname, $keyNames)){
                         echo "Didn't find the key name already";
-                        $keyNode = $model->tsigkeys->tsigkey->add();
-                        $keyNode->setNodes(
+                        $newtsigkey = Tsigkey->addbase(
                             [
                                 'enabled' => 1,
                                 'algo' => $domain->transferkeyalgo,
@@ -72,12 +68,11 @@ class Domain1_1_0 extends BaseModelMigration
                                 'secret' => $domain->transferkey,
                             ]
                         );
-
-                        print_r($keyNode);
                     }
                 }
             }
         }
-
+        # Temporarily here for testing so the version number doesn't increase incase it does actually work
+        trigger_error("Test",E_USER_ERROR);
     }
 }
