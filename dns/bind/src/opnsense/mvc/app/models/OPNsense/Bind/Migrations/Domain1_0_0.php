@@ -57,7 +57,7 @@ class Domain1_1_0 extends BaseModelMigration
         if (!empty($bindConfig->domain->domains->domain)) {
             foreach ($bindConfig->domain->domains->domain as $domain) {
                 echo "Domain $domain->domainname found";
-                print_r($domain)
+                print_r($domain);
 
                     if (!empty($domain->transferkeyname)) {
                     echo "Transfer key isn't empty";
