@@ -31,7 +31,7 @@
 namespace OPNsense\Bind\Migrations;
 
 use OPNsense\Base\BaseModelMigration;
-use OPNsense\Bind;
+use OPNsense\Bind\Api;
 
 class Domain1_1_0 extends BaseModelMigration
 {
@@ -41,7 +41,7 @@ class Domain1_1_0 extends BaseModelMigration
     */
     public function run($model)
     {
-        print_r($model);
+#        print_r($model);
 
         $tsigkeyNames = [];
         $tsigHandle = new TsigkeyController();
