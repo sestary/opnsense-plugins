@@ -31,7 +31,7 @@
 namespace OPNsense\Bind\Migrations;
 
 use OPNsense\Base\BaseModelMigration;
-use OPNsense\Bind\Tsigkey;
+use OPNsense\Bind;
 
 class Domain1_1_0 extends BaseModelMigration
 {
@@ -44,7 +44,7 @@ class Domain1_1_0 extends BaseModelMigration
         print_r($model);
 
         $tsigkeyNames = [];
-        $tsigHandle = (new \ReflectionClass(static::\OPNsense\Bind\Tsigkey))->newInstance();
+        $tsigHandle = new TsigkeyController();
 
         foreach ($tsigHandle->iterateItems() as $tsigkey) {
             print_r($tsigkey);
