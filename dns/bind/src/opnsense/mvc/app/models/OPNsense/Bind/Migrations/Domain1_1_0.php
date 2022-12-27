@@ -31,7 +31,8 @@
 namespace OPNsense\Bind\Migrations;
 
 use OPNsense\Base\BaseModelMigration;
-use OPNsense\Bind\Api;
+use OPNsense\Core\Config;
+use OPNsense\Bind\Tsigkey;
 
 class Domain1_1_0 extends BaseModelMigration
 {
@@ -41,26 +42,28 @@ class Domain1_1_0 extends BaseModelMigration
     */
     public function run($model)
     {
-#        print_r($model);
+        $config = Config::getInstance()->object();
 
-        $tsigkeyNames = [];
-        $tsigHandle = new TsigkeyController();
-
-        foreach ($tsigHandle->iterateItems() as $tsigkey) {
-            print_r($tsigkey);
-            array_push($tsigkeyNames, $tsigkey->name);
+        # Checks to see if there is a bind config section, otherwise skips the rest of the migration
+        if (empty($config->OPNsense->bind)) {
+            return;
         }
 
-        print_r($keyNames);
+        # This retrieves the existing keys just in case they exist
+        $tsigkeyNames = [];
+        $tsigHandle = new Tsigkey();
+        foreach (($tsigHandle->getNodes())["tsigkeys"]["tsigkey"] as $tsigkeyuuid => $tsigkey) {
+            $tsigkeyNames[$tsigkey["name"]] = $tsigkeyuuid;
+        }
 
-        if (!empty($bindConfig->domain->domains->domain)) {
-            foreach ($bindConfig->domain->domains->domain as $domain) {
-                echo "Domain $domain->domainname found";
-                print_r($domain);
+        $bindConfig = $config->OPNsense->bind;
+        foreach ($bindConfig->domain->domains->domain as $domainObj) {
+                $domainuuid = $domainObj->attributes()["uuid"];
+                echo "Domain $domainObj->domainname found with $domainuuid\n";
 
-                    if (!empty($domain->transferkeyname)) {
+                if (!empty($domainObj->transferkeyname)) {
                     echo "Transfer key isn't empty";
-                        if (!in_array($domain->transferkeyname, $keyNames)){
+                    if (!array_key_exists((string)$domain->transferkeyname, $tsigkeyNames)) {
                         echo "Didn't find the key name already";
                         $newtsigkey = $tsigHandle->addbase(
                             [
@@ -70,11 +73,12 @@ class Domain1_1_0 extends BaseModelMigration
                                 'secret' => $domain->transferkey,
                             ]
                         );
+                        print_r($tsigHandle->getNodes());
+                        $tsigkeyNames[$domain->transferkeyname] => $newtsigkey->getAttributes('uuid');
+                        print_r(get_class_methods($model))
                     }
                 }
-            }
-        }
-        # Temporarily here for testing so the version number doesn't increase incase it does actually work
+            }        # Temporarily here for testing so the version number doesn't increase incase it does actually work
         trigger_error("Test",E_USER_ERROR);
     }
 }
