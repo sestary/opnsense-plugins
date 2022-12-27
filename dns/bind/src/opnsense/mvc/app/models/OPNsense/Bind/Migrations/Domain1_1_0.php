@@ -57,28 +57,37 @@ class Domain1_1_0 extends BaseModelMigration
         }
 
         $bindConfig = $config->OPNsense->bind;
-        foreach ($bindConfig->domain->domains->domain as $domainObj) {
-                $domainuuid = $domainObj->attributes()["uuid"];
-                echo "Domain $domainObj->domainname found with $domainuuid\n";
+        foreach ($bindConfig->domain->domains->domain as $domain) {
+            $domainuuid = $domain->attributes()["uuid"];
+            echo "Domain $domain->domainname found with $domainuuid\n";
 
-                if (!empty($domainObj->transferkeyname)) {
-                    echo "Transfer key isn't empty";
-                    if (!array_key_exists((string)$domain->transferkeyname, $tsigkeyNames)) {
-                        echo "Didn't find the key name already";
-                        $newtsigkey = $tsigHandle->addbase(
-                            [
-                                'enabled' => 1,
-                                'algo' => $domain->transferkeyalgo,
-                                'name' => $domain->transferkeyname,
-                                'secret' => $domain->transferkey,
-                            ]
-                        );
-                        print_r($tsigHandle->getNodes());
-                        $tsigkeyNames[$domain->transferkeyname] => $newtsigkey->getAttributes('uuid');
-                        print_r(get_class_methods($model))
+            if (!empty($domain->transferkeyname)) {
+                echo "Transfer key isn't empty";
+                if (!array_key_exists((string)$domain->transferkeyname, $tsigkeyNames)) {
+                    echo "Didn't find the key name already";
+
+                    $realdomain = $model->getNodeByReference('domains.domain.' . $domainuuid);
+
+                    $newtsigkey = [
+                        'enabled' => 1,
+                        'algo' => $domain->transferkeyalgo,
+                        'name' => $domain->transferkeyname,
+                        'secret' => $domain->transferkey,
+                    ];
+
+                    if ((string)$realdomain->type == "master") {
+                        print_r(get_class_methods($realdomain->allowtransfertsigkey));
+                        $tsigkeyNode = $realdomain->allowtransfertsigkey->Add();
+                    } else {
+                        $tsigkeyNode = $realdomain->mastertransfertsigkey->Add();
                     }
+                    $tsigkeyNode->setNodes($newtsigkey);
+                    print_r($tsigkeyNode);
+#                        $tsigkeyNames[$domain->transferkeyname] = $newtsigkey->getAttributes('uuid');
+#                        print_r(get_class_methods($model));
                 }
-            }        # Temporarily here for testing so the version number doesn't increase incase it does actually work
+            }
+        }        # Temporarily here for testing so the version number doesn't increase incase it does actually work
         trigger_error("Test",E_USER_ERROR);
     }
 }

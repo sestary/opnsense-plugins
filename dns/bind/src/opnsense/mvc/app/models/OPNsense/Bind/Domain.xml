@@ -30,7 +30,7 @@
                             <display>name</display>
                         </template>
                     </Model>
-                    <Multiple>N</Multiple>
+                    <Multiple>Y</Multiple>
                     <Required>N</Required>
                 </primarytransfertsigkey>
                 <allownotifysecondary type="NetworkField">
@@ -61,7 +61,7 @@
                             <display>name, algo</display>
                         </template>
                     </Model>
-                    <Multiple>N</Multiple>
+                    <Multiple>Y</Multiple>
                     <Required>N</Required>
                 </allowtransfertsigkey>
                 <allowquery type="ModelRelationField">
