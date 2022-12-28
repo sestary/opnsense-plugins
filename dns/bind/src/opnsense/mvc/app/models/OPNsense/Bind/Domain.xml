@@ -28,6 +28,9 @@
                             <source>OPNsense.Bind.Tsigkey</source>
                             <items>tsig_keys.tsig_key</items>
                             <display>name</display>
+                            <filters>
+                                <enabled>/1/</enabled>
+                            </filters>
                         </template>
                     </Model>
                     <Multiple>Y</Multiple>
@@ -48,17 +51,23 @@
                             <source>OPNsense.Bind.Acl</source>
                             <items>acls.acl</items>
                             <display>name</display>
+                            <filters>
+                                <enabled>/1/</enabled>
+                            </filters>
                         </template>
                     </Model>
-                    <Multiple>N</Multiple>
+                    <Multiple>Y</Multiple>
                     <Required>N</Required>
                 </allowtransfer>
                 <allowtransfertsigkey type="ModelRelationField">
                     <Model>
                         <template>
                             <source>OPNsense.Bind.Tsigkey</source>
-                            <items>tsig_keys.tsig_key</items>
+                            <items>tsig_keys</items>
                             <display>name, algo</display>
+                            <filters>
+                                <enabled>/1/</enabled>
+                            </filters>
                         </template>
                     </Model>
                     <Multiple>Y</Multiple>
@@ -70,9 +79,12 @@
                             <source>OPNsense.Bind.Acl</source>
                             <items>acls.acl</items>
                             <display>name</display>
+                            <filters>
+                                <enabled>/1/</enabled>
+                            </filters>
                         </template>
                     </Model>
-                    <Multiple>N</Multiple>
+                    <Multiple>Y</Multiple>
                     <Required>N</Required>
                 </allowquery>
                 <serial type="TextField">

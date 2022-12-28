@@ -87,5 +87,7 @@ class Domain1_1_0 extends BaseModelMigration
             }
         }        # Temporarily here for testing so the version number doesn't increase incase it does actually work
         trigger_error("Test",E_USER_ERROR);
+
+        parent::run($model);
     }
 }
