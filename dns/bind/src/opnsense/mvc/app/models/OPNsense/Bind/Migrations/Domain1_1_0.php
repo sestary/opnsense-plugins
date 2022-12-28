@@ -63,17 +63,18 @@ class Domain1_1_0 extends BaseModelMigration
             if (!empty($domain->transferkeyname)) {
                 # Checks if the key already exists in the model and adds it to the existing keys
                 if (!array_key_exists((string)$domain->transferkeyname, $tsigkeyNames)) {
-                    $domainModel = $model->getNodeByReference('domains.domain.' . $domain->attributes()["uuid"]);
 
                     $newkey = $tsigHandle->tsigkeys->tsigkey->add();
                     $newkey->setNodes([
-                       'enabled' => 1,
+                        'enabled' => 1,
                         'algo' => $domain->transferkeyalgo,
                         'name' => $domain->transferkeyname,
                         'secret' => $domain->transferkey,
                     ]);
                     $tsigkeyNames[(string)$domain->transferkeyname] = $newkey->getAttributes()["uuid"];
                 }
+    
+                $domainModel = $model->getNodeByReference('domains.domain.' . $domain->attributes()["uuid"]);
 
                 # Adds key to the right field for the domain type.
                 if ((string)$domainModel->type == "master") {
@@ -83,6 +84,10 @@ class Domain1_1_0 extends BaseModelMigration
                 }
             }
         }
+
+        # Save the config for the TSIG Keys
+        $tsigHandle->serializeToConfig();
+        Config::getInstance()->save();
 
         parent::run($model);
     }
