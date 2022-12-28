@@ -78,7 +78,7 @@ class Domain1_1_0 extends BaseModelMigration
 
                 # Adds key to the right field for the domain type.
                 if ((string)$domainModel->type == "master") {
-                    $tsigKeyNode = $domainModel->allowtransfertsigkey->setValue($tsigkeyNames[(string)$domain->transferkeyname]);
+                    $tsigKeyNode = $domainModel->allowtransfertsigkeys->setValue($tsigkeyNames[(string)$domain->transferkeyname]);
                 } else {
                     $tsigkeyNode = $domainModel->mastertransfertsigkey->setValue($tsigkeyNames[(string)$domain->transferkeyname]);
                 }

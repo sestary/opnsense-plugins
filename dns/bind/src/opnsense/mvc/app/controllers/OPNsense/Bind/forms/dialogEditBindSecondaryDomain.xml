@@ -13,14 +13,20 @@
     </field>
     <field>
         <id>domain.allowtransfer</id>
-        <label>Allow Transfer</label>
-        <type>dropdown</type>
-        <help>Define an ACL where you allow which server can retrieve this zone.</help>
+        <label>Allow Transfer with ACLs</label>
+        <type>select_multiple</type>
+        <help>Define the ACLs that can be used to retrieve this zone.</help>
+    </field>
+    <field>
+        <id>domain.allowtransfertsigkey</id>
+        <label>Allow Transfer with TSIG Keys</label>
+        <type>select_multiple</type>
+        <help>Define the TSIG Keys that can retrieve this zone.</help>
     </field>
     <field>
         <id>domain.allowquery</id>
         <label>Allow Query</label>
-        <type>dropdown</type>
+        <type>select_multiple</type>
         <help>Define an ACL where you allow which client are allowed to query this zone.</help>
     </field>
     <field>
@@ -33,7 +39,8 @@
     </field>
     <field>
         <id>domain.primarytransfertsigkey</id>
-        <type>select_multiple</type>
+        <label>Transfer TSIG Key</label>
+        <type>dropdown</type>
         <help>The TSIG key used to transfer domain data from the master server.</help>
     </field>
     <field>

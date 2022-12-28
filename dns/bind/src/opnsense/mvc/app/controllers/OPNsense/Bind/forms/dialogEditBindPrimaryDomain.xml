@@ -13,15 +13,15 @@
     </field>
     <field>
         <id>domain.allowtransfer</id>
-        <label>Allow Transfer with ACL</label>
+        <label>Allow Transfer with ACLs</label>
         <type>select_multiple</type>
-        <help>Define an ACL where you allow which server can retrieve this zone.</help>
+        <help>Define the ACLs that can be used to retrieve this zone.</help>
     </field>
     <field>
-        <id>domain.allowtransfertsigkey</id>
-        <label>Allow Transfer with TSIG Key</label>
+        <id>domain.allowtransfertsigkeys</id>
+        <label>Allow Transfer with TSIG Keys</label>
         <type>select_multiple</type>
-        <help>Define the TSIG Keys where you allow which keys can retrieve this zone.</help>
+        <help>Define the TSIG Keys that can retrieve this zone.</help>
     </field>
     <field>
         <id>domain.allowquery</id>

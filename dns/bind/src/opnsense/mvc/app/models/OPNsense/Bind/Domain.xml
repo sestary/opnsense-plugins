@@ -33,7 +33,7 @@
                             </filters>
                         </template>
                     </Model>
-                    <Multiple>Y</Multiple>
+                    <Multiple>N</Multiple>
                     <Required>N</Required>
                 </primarytransfertsigkey>
                 <allownotifysecondary type="NetworkField">
@@ -59,7 +59,7 @@
                     <Multiple>Y</Multiple>
                     <Required>N</Required>
                 </allowtransfer>
-                <allowtransfertsigkey type="ModelRelationField">
+                <allowtransfertsigkeys type="ModelRelationField">
                     <Model>
                         <template>
                             <source>OPNsense.Bind.Tsigkey</source>
@@ -72,7 +72,7 @@
                     </Model>
                     <Multiple>Y</Multiple>
                     <Required>N</Required>
-                </allowtransfertsigkey>
+                </allowtransfertsigkeys>
                 <allowquery type="ModelRelationField">
                     <Model>
                         <template>
