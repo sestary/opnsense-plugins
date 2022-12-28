@@ -57,36 +57,32 @@ class Domain1_1_0 extends BaseModelMigration
         }
 
         $bindConfig = $config->OPNsense->bind;
+        # Loops through the domains in the config
         foreach ($bindConfig->domain->domains->domain as $domain) {
-            $domainuuid = $domain->attributes()["uuid"];
-            echo "Domain $domain->domainname found with $domainuuid\n";
-
+            # Checks if the transferkeyname field is empty or has a value
             if (!empty($domain->transferkeyname)) {
-                echo "Transfer key isn't empty";
+                # Checks if the key already exists in the model and adds it to the existing keys
                 if (!array_key_exists((string)$domain->transferkeyname, $tsigkeyNames)) {
-                    echo "Didn't find the key $domain->transferkeyname name already";
+                    $domainModel = $model->getNodeByReference('domains.domain.' . $domain->attributes()["uuid"]);
 
-                    $realdomain = $model->getNodeByReference('domains.domain.' . $domainuuid);
-
-                    $newkey = $tsigHandle->tsigkeys->tsigkey->Add();
+                    $newkey = $tsigHandle->tsigkeys->tsigkey->add();
                     $newkey->setNodes([
                        'enabled' => 1,
                         'algo' => $domain->transferkeyalgo,
                         'name' => $domain->transferkeyname,
                         'secret' => $domain->transferkey,
                     ]);
-                    $newkeyuuid = $newkey->getAttributes()["uuid"];
+                    $tsigkeyNames[(string)$domain->transferkeyname] = $newkey->getAttributes()["uuid"];
+                }
 
-                    if ((string)$realdomain->type == "master") {
-                        $tsigKeyNode = $realdomain->allowtransfertsigkey->Add();
-                    } else {
-                        $tsigkeyNode = $realdomain->mastertransfertsigkey->Add();
-                    }
-                    $tsigkeyNode->setNodes($newkeyuuid);
+                # Adds key to the right field for the domain type.
+                if ((string)$domainModel->type == "master") {
+                    $tsigKeyNode = $domainModel->allowtransfertsigkey->setValue($tsigkeyNames[(string)$domain->transferkeyname]);
+                } else {
+                    $tsigkeyNode = $domainModel->mastertransfertsigkey->setValue($tsigkeyNames[(string)$domain->transferkeyname]);
                 }
             }
-        }        # Temporarily here for testing so the version number doesn't increase incase it does actually work
-        trigger_error("Test",E_USER_ERROR);
+        }
 
         parent::run($model);
     }
