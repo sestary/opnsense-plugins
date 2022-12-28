@@ -64,20 +64,23 @@ class Domain1_1_0 extends BaseModelMigration
             if (!empty($domain->transferkeyname)) {
                 echo "Transfer key isn't empty";
                 if (!array_key_exists((string)$domain->transferkeyname, $tsigkeyNames)) {
-                    echo "Didn't find the key name already";
+                    echo "Didn't find the key $domain->transferkeyname name already";
 
                     $realdomain = $model->getNodeByReference('domains.domain.' . $domainuuid);
 
-                    $newtsigkey = [
+                    $newtsigkey = array(
                         'enabled' => 1,
                         'algo' => $domain->transferkeyalgo,
                         'name' => $domain->transferkeyname,
                         'secret' => $domain->transferkey,
-                    ];
+                    );
+
+                    $newkey = $tsigHandle->setNodes($newtsigkey);
+                    print_r($newkey);
 
                     if ((string)$realdomain->type == "master") {
-                        print_r(get_class_methods($realdomain->allowtransfertsigkey));
-                        $tsigkeyNode = $realdomain->allowtransfertsigkey->Add();
+                        print_r(get_class_methods($realdomain->allowtransfertsigkey->getParentModel()));
+                        $tsigkeyNode = $realdomain->allowtransfertsigkey->getParentModel();
                     } else {
                         $tsigkeyNode = $realdomain->mastertransfertsigkey->Add();
                     }
