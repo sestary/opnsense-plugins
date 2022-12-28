@@ -68,26 +68,21 @@ class Domain1_1_0 extends BaseModelMigration
 
                     $realdomain = $model->getNodeByReference('domains.domain.' . $domainuuid);
 
-                    $newtsigkey = array(
-                        'enabled' => 1,
+                    $newkey = $tsigHandle->tsigkeys->tsigkey->Add();
+                    $newkey->setNodes([
+                       'enabled' => 1,
                         'algo' => $domain->transferkeyalgo,
                         'name' => $domain->transferkeyname,
                         'secret' => $domain->transferkey,
-                    );
-
-                    $newkey = $tsigHandle->setNodes($newtsigkey);
-                    print_r($newkey);
+                    ]);
+                    $newkeyuuid = $newkey->getAttributes()["uuid"];
 
                     if ((string)$realdomain->type == "master") {
-                        print_r(get_class_methods($realdomain->allowtransfertsigkey->getParentModel()));
-                        $tsigkeyNode = $realdomain->allowtransfertsigkey->getParentModel();
+                        $tsigKeyNode = $realdomain->allowtransfertsigkey->Add();
                     } else {
                         $tsigkeyNode = $realdomain->mastertransfertsigkey->Add();
                     }
-                    $tsigkeyNode->setNodes($newtsigkey);
-                    print_r($tsigkeyNode);
-#                        $tsigkeyNames[$domain->transferkeyname] = $newtsigkey->getAttributes('uuid');
-#                        print_r(get_class_methods($model));
+                    $tsigkeyNode->setNodes($newkeyuuid);
                 }
             }
         }        # Temporarily here for testing so the version number doesn't increase incase it does actually work
