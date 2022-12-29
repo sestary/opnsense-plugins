@@ -61,7 +61,7 @@ class AclController extends ApiMutableModelControllerBase
     public function addAclAction()
     {
         if ($this->request->isPost() && $this->request->hasPost("acl")) {
-            if ($this->nameInUse($this->request->getPost("acl")["name"]) {
+            if ($this->nameInUse($this->request->getPost("acl")["name"])) {
                 return array(
                         "result" => "failed",
                         "validations" => array(
@@ -83,7 +83,7 @@ class AclController extends ApiMutableModelControllerBase
     public function setAclAction($uuid)
     {
         if ($this->request->isPost() && $this->request->hasPost("acl")) {
-            if ($this->nameInUse($this->request->getPost("acl")["name"]) {
+            if ($this->nameInUse($this->request->getPost("acl")["name"])) {
                 return array(
                         "result" => "failed",
                         "validations" => array(
@@ -93,12 +93,10 @@ class AclController extends ApiMutableModelControllerBase
                 }
             }
 
-            return $this->addBase('acl', 'acls.acl');
+            return $this->setBase('acl', 'acls.acl', $uuid);
         }
 
         return array("result" => "failed");
-
-        return $this->setBase('acl', 'acls.acl', $uuid);
     }
     public function toggleAclAction($uuid)
     {
