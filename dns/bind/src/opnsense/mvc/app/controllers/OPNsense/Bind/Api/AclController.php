@@ -63,12 +63,11 @@ class AclController extends ApiMutableModelControllerBase
         if ($this->request->isPost() && $this->request->hasPost("acl")) {
             if ($this->nameInUse($this->request->getPost("acl")["name"])) {
                 return array(
-                        "result" => "failed",
-                        "validations" => array(
-                            "acl.name" => "Access Control List with this name already exists.",
-                        )
-                    );
-                }
+                    "result" => "failed",
+                    "validations" => array(
+                        "acl.name" => "Access Control List with this name already exists.",
+                    )
+                );
             }
 
             return $this->addBase('acl', 'acls.acl');
@@ -85,12 +84,11 @@ class AclController extends ApiMutableModelControllerBase
         if ($this->request->isPost() && $this->request->hasPost("acl")) {
             if ($this->nameInUse($this->request->getPost("acl")["name"])) {
                 return array(
-                        "result" => "failed",
-                        "validations" => array(
-                            "acl.name" => "Access Control List with this name already exists.",
-                        )
-                    );
-                }
+                    "result" => "failed",
+                    "validations" => array(
+                        "acl.name" => "Access Control List with this name already exists.",
+                    )
+                );
             }
 
             return $this->setBase('acl', 'acls.acl', $uuid);
