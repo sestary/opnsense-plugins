@@ -48,7 +48,25 @@ class AclController extends ApiMutableModelControllerBase
     }
     public function addAclAction()
     {
-        return $this->addBase('acl', 'acls.acl');
+        if ($this->request->isPost() && $this->request->hasPost("acl")) {
+
+            return array(
+                "result" => "failed",
+                "validations" => $this->request->getPost("acl")
+            )
+            if (in_array($this->request->getPost("acl")["name"], $this->searchBase('acls.acl', array("name")) {
+                return array(
+                    "result" => "failed",
+                    "validations" => array(
+                        "acl.name" => "Access Control List with this name already exists.",
+                    )
+                );
+            }
+
+            return $this->addBase('acl', 'acls.acl');
+        }
+
+        return array("result" => "failed");
     }
     public function delAclAction($uuid)
     {
