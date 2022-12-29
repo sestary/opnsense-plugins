@@ -37,6 +37,18 @@ class TsigkeyController extends ApiMutableModelControllerBase
     protected static $internalModelName = 'tsigkey';
     protected static $internalModelClass = '\OPNsense\Bind\Tsigkey';
 
+    function nameInUse($name, $excludeUUID = null)
+    {
+        # Loops through all the Acls and ensure the name doesn't exist
+        foreach ($this->searchBase('tsigkeys.tsigkey', array("name"))["rows"] as $existingAcl) {
+            if ($existingAcl["name"] == $name && $existingAcl["uuid"] != $excludeUUID) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function searchKeyAction()
     {
         return $this->searchBase('tsigkeys.tsigkey', array("enabled", "name", "algo", "secret"));
@@ -48,7 +60,20 @@ class TsigkeyController extends ApiMutableModelControllerBase
     }
     public function addKeyAction()
     {
-        return $this->addBase('tsigkey', 'tsigkeys.tsigkey');
+        if ($this->request->isPost() && $this->request->hasPost("tsigkey")) {
+            if ($this->nameInUse($this->request->getPost("tsigkey")["name"])) {
+                return array(
+                    "result" => "failed",
+                    "validations" => array(
+                        "tsigkey.name" => "TSIG Key with this name already exists.",
+                    )
+                );
+            }
+
+            return $this->addBase('tsigkey', 'tsigkeys.tsigkey');
+        }
+
+        return array("result" => "failed");
     }
     public function delKeyAction($uuid)
     {
@@ -56,7 +81,20 @@ class TsigkeyController extends ApiMutableModelControllerBase
     }
     public function setKeyAction($uuid)
     {
-        return $this->setBase('tsigkey', 'tsigkeys.tsigkey', $uuid);
+        if ($this->request->isPost() && $this->request->hasPost("tsigkey")) {
+            if ($this->nameInUse($this->request->getPost("tsigkey")["name"],$uuid)) {
+                return array(
+                    "result" => "failed",
+                    "validations" => array(
+                        "tsigkey.name" => "TSIG Key with this name already exists.",
+                    )
+                );
+            }
+
+            return $this->setBase('tsigkey', 'tsigkeys.tsigkey', $uuid);
+        }
+
+        return array("result" => "failed");
     }
     public function toggleKeyAction($uuid)
     {
