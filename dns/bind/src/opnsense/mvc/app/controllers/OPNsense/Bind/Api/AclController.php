@@ -40,8 +40,8 @@ class AclController extends ApiMutableModelControllerBase
     function nameInUse($name)
     {
         # Loops through all the Acls and ensure the name doesn't exist
-        for (existingAcl in $this->searchBase('acls.acl', array("name"))->rows) {
-            if (existingAcl->name == $name) {
+        for ($existingAcl in $this->searchBase('acls.acl', array("name"))->rows) {
+            if ($existingAcl->name == $name) {
                 return true;
             }
         }
