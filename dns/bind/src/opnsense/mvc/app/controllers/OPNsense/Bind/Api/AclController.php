@@ -42,6 +42,7 @@ class AclController extends ApiMutableModelControllerBase
         # Loops through all the Acls and ensure the name doesn't exist
         foreach ($this->searchBase('acls.acl', array("name"))["rows"] as $existingAcl) {
             if ($existingAcl["name"] == $name && $existingAcl["uuid"] != $excludeUUID) {
+                print_r($existingAcl)
                 return true;
             }
         }
