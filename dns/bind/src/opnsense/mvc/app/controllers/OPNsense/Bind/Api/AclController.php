@@ -49,7 +49,7 @@ class AclController extends ApiMutableModelControllerBase
     public function addAclAction()
     {
         if ($this->request->isPost() && $this->request->hasPost("acl")) {
-            if (in_array($this->request->getPost("acl")->name, $this->searchBase('acls.acl', array("name")))) {
+            if (in_array($this->request->getPost("acl")["name"], $this->searchBase('acls.acl', array("name")))) {
                 return array(
                     "result" => "failed",
                     "validations" => array(
