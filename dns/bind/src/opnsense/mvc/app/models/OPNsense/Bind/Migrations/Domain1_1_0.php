@@ -57,7 +57,7 @@ class Domain1_1_0 extends BaseModelMigration
         }
 
         $bindConfig = $config->OPNsense->bind;
-        # Loops through the domains in the config
+        # Loops through the domains in the config and creates the non-existent keys
         foreach ($bindConfig->domain->domains->domain as $domain) {
             # Checks if the transferkeyname field is empty or has a value
             if (!empty($domain->transferkeyname)) {
@@ -73,7 +73,17 @@ class Domain1_1_0 extends BaseModelMigration
                     ]);
                     $tsigkeyNames[(string)$domain->transferkeyname] = $newkey->getAttributes()["uuid"];
                 }
-    
+            }
+        }
+
+       # Save the config for the TSIG Keys
+        $tsigHandle->serializeToConfig();
+        Config::getInstance()->save();
+
+        # Loops through the domains in the config and sets the new fields
+        foreach ($bindConfig->domain->domains->domain as $domain) {
+            # Checks if the transferkeyname field is empty or has a value
+            if (!empty($domain->transferkeyname)) {
                 $domainModel = $model->getNodeByReference('domains.domain.' . $domain->attributes()["uuid"]);
 
                 # Adds key to the right field for the domain type.
@@ -84,11 +94,7 @@ class Domain1_1_0 extends BaseModelMigration
                 }
             }
         }
-
-        # Save the config for the TSIG Keys
-        $tsigHandle->serializeToConfig();
-        Config::getInstance()->save();
-
+ 
         parent::run($model);
     }
 }
