@@ -54,7 +54,7 @@ class AclController extends ApiMutableModelControllerBase
                 "result" => "failed",
                 "validations" => $this->request->getPost("acl")
             );
-            if (in_array($this->request->getPost("acl")["name"], $this->searchBase('acls.acl', array("name")) {
+            if (in_array($this->request->getPost("acl")["name"], $this->searchBase('acls.acl', array("name"))) {
                 return array(
                     "result" => "failed",
                     "validations" => array(
