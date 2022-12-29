@@ -37,11 +37,11 @@ class AclController extends ApiMutableModelControllerBase
     protected static $internalModelName = 'acl';
     protected static $internalModelClass = '\OPNsense\Bind\Acl';
 
-    function nameInUse($name)
+    function nameInUse($name, $excludeUUID = null)
     {
         # Loops through all the Acls and ensure the name doesn't exist
         foreach ($this->searchBase('acls.acl', array("name"))["rows"] as $existingAcl) {
-            if ($existingAcl["name"] == $name) {
+            if ($existingAcl["name"] == $name && $existingAcl["uuid"] != $excludeUUID) {
                 return true;
             }
         }
@@ -82,7 +82,7 @@ class AclController extends ApiMutableModelControllerBase
     public function setAclAction($uuid)
     {
         if ($this->request->isPost() && $this->request->hasPost("acl")) {
-            if ($this->nameInUse($this->request->getPost("acl")["name"])) {
+            if ($this->nameInUse($this->request->getPost("acl")["name"],$uuid)) {
                 return array(
                     "result" => "failed",
                     "validations" => array(
