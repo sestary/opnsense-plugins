@@ -37,6 +37,18 @@ class AclController extends ApiMutableModelControllerBase
     protected static $internalModelName = 'acl';
     protected static $internalModelClass = '\OPNsense\Bind\Acl';
 
+    function nameInUse($name)
+    {
+        # Loops through all the Acls and ensure the name doesn't exist
+        for (existingAcl in $this->searchBase('acls.acl', array("name"))->rows) {
+            if (existingAcl->name == $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function searchAclAction()
     {
         return $this->searchBase('acls.acl', array("enabled", "name", "networks"));
@@ -49,17 +61,14 @@ class AclController extends ApiMutableModelControllerBase
     public function addAclAction()
     {
         if ($this->request->isPost() && $this->request->hasPost("acl")) {
-            return array(
-                "result" => "failed",
-                "validations" => $this->searchBase('acls.acl', array("name"))
-            );
-            if (in_array($this->request->getPost("acl")["name"], $this->searchBase('acls.acl', array("name")))) {
+            if ($this->nameInUse($this->request->getPost("acl")["name"]) {
                 return array(
-                    "result" => "failed",
-                    "validations" => array(
-                        "acl.name" => "Access Control List with this name already exists.",
-                    )
-                );
+                        "result" => "failed",
+                        "validations" => array(
+                            "acl.name" => "Access Control List with this name already exists.",
+                        )
+                    );
+                }
             }
 
             return $this->addBase('acl', 'acls.acl');
@@ -73,6 +82,22 @@ class AclController extends ApiMutableModelControllerBase
     }
     public function setAclAction($uuid)
     {
+        if ($this->request->isPost() && $this->request->hasPost("acl")) {
+            if ($this->nameInUse($this->request->getPost("acl")["name"]) {
+                return array(
+                        "result" => "failed",
+                        "validations" => array(
+                            "acl.name" => "Access Control List with this name already exists.",
+                        )
+                    );
+                }
+            }
+
+            return $this->addBase('acl', 'acls.acl');
+        }
+
+        return array("result" => "failed");
+
         return $this->setBase('acl', 'acls.acl', $uuid);
     }
     public function toggleAclAction($uuid)
