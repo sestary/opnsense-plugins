@@ -53,25 +53,29 @@ class M1_2_0 extends BaseModelMigration
             $forwarderHandle = new Forwarder();
             $bindConfig = $config->OPNsense->bind;
 
-            $UUIDlist = array();
-            /* Loops through all the forwarders in the general config */
-            foreach (explode(",", $bindConfig->general->forwarders) as $fowarder) {
-                $newforwarder = $forwarderHandle->forwarders->forwarder->add();
-                $newforwarder->setNodes([
-                    'enabled' => 1,
-                    'ip' => (string)$forwarder,
-                    'port' => 53, 
-                ]);
+            /* Check that there are forwarders configured */
+            if (!empty((string)$bindConfig->general->forwarders)) {
+                $UUIDlist = array();
+                /* Loops through all the forwarders in the general config */
+                foreach (explode(",", $bindConfig->general->forwarders) as $fowarder) {
+                    $newforwarder = $forwarderHandle->forwarders->forwarder->add();
+                    file_put_contents('./log.log', $forwarder, FILE_APPEND);
+                    $newforwarder->setNodes([
+                        'enabled' => 1,
+                        'ip' => (string)$forwarder,
+                        'port' => 53, 
+                    ]);
                 
-                $UUIDlist[] = $newforwarder->getAttributes()['uuid'];
-            }
+                    $UUIDlist[] = $newforwarder->getAttributes()['uuid'];
+                }
 
-            /* Add forwarder UUIDs to new list of forwarders */
-            $model->forwarders = (string)implode(',', $UUIDlist);
+                /* Add forwarder UUIDs to new list of forwarders */
+                $model->forwarders = (string)implode(',', $UUIDlist);
      
-            /* Save the config for the TSIG Keys */
-            $forwarderHandle->serializeToConfig();
-            Config::getInstance()->save();
+                /* Save the config for the TSIG Keys */
+                $forwarderHandle->serializeToConfig();
+                Config::getInstance()->save();
+            }
 
             parent::run($model);
         }
