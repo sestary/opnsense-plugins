@@ -32,7 +32,7 @@ use OPNsense\Base\BaseModelMigration;
 use OPNsense\Core\Config;
 use OPNsense\Bind\General;
 
-class M1_1_2 extends BaseModelMigration
+class M1_2_0 extends BaseModelMigration
 {
     /**
     * Migrate older keys into new model

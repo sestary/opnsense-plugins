@@ -77,18 +77,6 @@ class DomainController extends ApiMutableModelControllerBase
     {
         return $this->searchBase(
             'domains.domain',
-            [   "enabled", "type", "domainname", "forwarders", "forwardtype" ],
-            "domainname",
-            function ($record) {
-                return $record->type->getNodeData()["forward"]["selected"] === 1;
-            }
-        );
-    }
-
-    public function searchForwardDomainAction()
-    {
-        return $this->searchBase(
-            'domains.domain',
             [   "enabled", "type", "domainname", "forwardip", "forwardtype" ],
             "domainname",
             function ($record) {
