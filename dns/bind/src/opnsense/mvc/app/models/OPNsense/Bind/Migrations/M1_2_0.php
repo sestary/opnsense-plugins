@@ -54,7 +54,7 @@ class M1_2_0 extends BaseModelMigration
 
             $UUIDlist = array();
             /* Loops through all the forwarders in the general config */
-            foreach ($bindConfig->general->forwarders.split(",") as $fowarder) {
+            foreach (explode(",", $bindConfig->general->forwarders) as $fowarder) {
                 $newforwarder = $forwarderHandle->forwarders->forwarder->add();
                 $newforwarder->setNodes([
                     'enabled' => 1,
