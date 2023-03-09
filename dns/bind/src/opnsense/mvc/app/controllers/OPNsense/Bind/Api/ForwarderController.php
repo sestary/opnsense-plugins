@@ -41,7 +41,7 @@ class ForwarderController extends ApiMutableModelControllerBase
     function ipportContraint($ip, $port, $excludeUUID = null)
     {
         foreach ($this->searchBase('forwarders.forwarder', array("ip", "port"))["rows"] as $existingForwarders) {
-            if ($existingForwarders["ip"] == $ip && $existingForwarders["port"] == $port && $existingAcl["uuid"] != $excludeUUID) {
+            if ($existingForwarders["ip"] == $ip && $existingForwarders["port"] == $port && $existingForwarders["uuid"] != $excludeUUID) {
                 return true;
             }
         }
@@ -61,7 +61,7 @@ class ForwarderController extends ApiMutableModelControllerBase
     public function addForwarderAction()
     {
         if ($this->request->isPost() && $this->request->hasPost("forwarder")) {
-            if ($this->ipportContraint($this->request->getPost("forwarders")["ip"], $this->request->getPost("forwarders")["port"])) {
+            if ($this->ipportContraint($this->request->getPost("forwarder")["ip"], $this->request->getPost("forwarder")["port"])) {
                 return array(
                     "result" => "failed",
                     "validations" => array(
@@ -81,8 +81,8 @@ class ForwarderController extends ApiMutableModelControllerBase
     }
     public function setForwarderAction($uuid)
     {
-        if ($this->request->isPost() && $this->request->hasPost("acl")) {
-            if ($this->ipportContraint($this->request->getPost("forwarders")["ip"], $this->request->getPost("forwarders")["port"], $uuid)) {
+        if ($this->request->isPost() && $this->request->hasPost("forwarder")) {
+            if ($this->ipportContraint($this->request->getPost("forwarder")["ip"], $this->request->getPost("forwarder")["port"], $uuid)) {
                 return array(
                     "result" => "failed",
                     "validations" => array(
