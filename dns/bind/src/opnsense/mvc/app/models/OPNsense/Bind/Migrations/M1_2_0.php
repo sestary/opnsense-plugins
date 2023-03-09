@@ -62,7 +62,7 @@ class M1_2_0 extends BaseModelMigration
                     'port' => 53, 
                 ]);
                 
-                $UUIDlist[] = $userNode->getAttributes()['uuid'];
+                $UUIDlist[] = $newforwarder->getAttributes()['uuid'];
             }
 
             /* Add forwarder UUIDs to new list of forwarders */
