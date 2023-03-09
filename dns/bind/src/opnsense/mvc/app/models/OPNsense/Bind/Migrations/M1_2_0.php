@@ -56,6 +56,7 @@ class M1_2_0 extends BaseModelMigration
             /* Loops through all the forwarders in the general config */
             foreach (explode(",", $bindConfig->general->forwarders) as $fowarder) {
                 $newforwarder = $forwarderHandle->forwarders->forwarder->add();
+                echo $forwarder;
                 $newforwarder->setNodes([
                     'enabled' => 1,
                     'ip' => $forwarder,
