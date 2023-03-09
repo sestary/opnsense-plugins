@@ -73,7 +73,7 @@ class M1_2_0 extends BaseModelMigration
                 Config::getInstance()->save();
 
                 /* Add forwarder UUIDs to new list of forwarders */
-                $model->forwarders->setValue((string)implode(',', $UUIDlist));
+                $model->getNodeByReference('forwarders')->setValue((string)implode(',', $UUIDlist));
             }
 
             parent::run($model);
