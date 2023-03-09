@@ -82,7 +82,7 @@ class ForwarderController extends ApiMutableModelControllerBase
     public function setForwarderAction($uuid)
     {
         if ($this->request->isPost() && $this->request->hasPost("acl")) {
-            if ($this->nameInUse($this->request->getPost("forwarders")["ip"], $this->request->getPost("forwarders")["port"]), $uuid)) {
+            if ($this->nameInUse($this->request->getPost("forwarders")["ip"], $this->request->getPost("forwarders")["port"], $uuid)) {
                 return array(
                     "result" => "failed",
                     "validations" => array(
