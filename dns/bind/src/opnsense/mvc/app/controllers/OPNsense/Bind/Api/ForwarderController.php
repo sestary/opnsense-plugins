@@ -37,6 +37,18 @@ class ForwarderController extends ApiMutableModelControllerBase
     protected static $internalModelName = 'forwarder';
     protected static $internalModelClass = '\OPNsense\Bind\Forwarder';
 
+    // This ensures that the IP and Port comintation is unique, this isn't possible with the model contraints
+    function ipportContraint($ip, $port, $excludeUUID = null)
+    {
+        foreach ($this->searchBase('forwarders.forwarder', array("ip", "port"))["rows"] as $existingForwarders) {
+            if ($existingForwarders["ip"] == $ip && $existingForwarders["port"] == $port && $existingAcl["uuid"] != $excludeUUID) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function searchForwarderAction()
     {
         return $this->searchBase('forwarders.forwarder', array("enabled", "ip", "port"));
@@ -48,7 +60,20 @@ class ForwarderController extends ApiMutableModelControllerBase
     }
     public function addForwarderAction()
     {
-        return $this->addBase('forwarder', 'forwarders.forwarder');
+        if ($this->request->isPost() && $this->request->hasPost("forwarder")) {
+            if ($this->nameInUse($this->request->getPost("forwarders")["ip"], $this->request->getPost("forwarders")["port"])) {
+                return array(
+                    "result" => "failed",
+                    "validations" => array(
+                        "forwarder.ip" => "Forwarder with this IP/Port combination already exists.",
+                    )
+                );
+            }
+
+            return $this->addBase('forwarder', 'forwarders.forwarder');
+        }
+
+        return array("result" => "failed");
     }
     public function delForwarderAction($uuid)
     {
@@ -56,7 +81,20 @@ class ForwarderController extends ApiMutableModelControllerBase
     }
     public function setForwarderAction($uuid)
     {
-        return $this->setBase('forwarder', 'forwarders.forwarder', $uuid);
+        if ($this->request->isPost() && $this->request->hasPost("acl")) {
+            if ($this->nameInUse($this->request->getPost("forwarders")["ip"], $this->request->getPost("forwarders")["port"]), $uuid)) {
+                return array(
+                    "result" => "failed",
+                    "validations" => array(
+                        "forwarder.ip" => "Forwarder with this IP/Port combination already exists.",
+                    )
+                );
+            }
+
+            return $this->addBase('forwarder', 'forwarders.forwarder', $uuid);
+        }
+
+        return array("result" => "failed");
     }
     public function toggleForwarderAction($uuid)
     {

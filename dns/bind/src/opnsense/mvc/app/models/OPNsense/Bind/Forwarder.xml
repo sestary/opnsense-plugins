@@ -14,12 +14,6 @@
                     <FieldSeparator>,</FieldSeparator>
                     <Required>Y</Required>
                     <asList>N</asList>
-                    <Constraints>
-                        <check001>
-                            <ValidationMessage>A forwarder with this name already exists.</ValidationMessage>
-                            <type>SingleSelectConstraint</type>
-                        </check001>
-                    </Constraints>
                 </ip>
                 <port type="PortField">
                     <default>53</default>
