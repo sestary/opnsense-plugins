@@ -43,6 +43,7 @@ class M1_2_0 extends BaseModelMigration
     public function run($model)
     {
         if ($model instanceof General) {
+            file_put_contents('./log.log', $model, FILE_APPEND);
             $config = Config::getInstance()->object();
 
             /* checks to see if there is a bind config section, otherwise skips the rest of the migration */
