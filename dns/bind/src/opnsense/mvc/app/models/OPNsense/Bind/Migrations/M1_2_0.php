@@ -31,6 +31,7 @@ namespace OPNsense\Bind\Migrations;
 use OPNsense\Base\BaseModelMigration;
 use OPNsense\Core\Config;
 use OPNsense\Bind\General;
+use OPNsense\Bind\Forwarder;
 
 class M1_2_0 extends BaseModelMigration
 {
