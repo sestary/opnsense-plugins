@@ -67,13 +67,13 @@ class M1_2_0 extends BaseModelMigration
                 
                     $UUIDlist[] = $newforwarder->getAttributes()['uuid'];
                 }
-
-                /* Add forwarder UUIDs to new list of forwarders */
-                $model->forwarders = (string)implode(',', $UUIDlist);
-     
+ 
                 /* Save the config for the TSIG Keys */
                 $forwarderHandle->serializeToConfig();
                 Config::getInstance()->save();
+
+                /* Add forwarder UUIDs to new list of forwarders */
+                $model->forwarders = (string)implode(',', $UUIDlist);
             }
 
             parent::run($model);
