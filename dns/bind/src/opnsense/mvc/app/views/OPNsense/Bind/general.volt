@@ -31,9 +31,12 @@ POSSIBILITY OF SUCH DAMAGE.
 <ul class="nav nav-tabs" data-tabs="tabs" id="maintabs">
     <li class="active"><a data-toggle="tab" href="#general">{{ lang._('General') }}</a></li>
     <li><a data-toggle="tab" href="#dnsbl">{{ lang._('DNSBL') }}</a></li>
+    <li><a data-toggle="tab" href="#forwarders">{{ lang._('Forwarders') }}</a></li>
     <li><a data-toggle="tab" href="#acls">{{ lang._('ACLs') }}</a></li>
+    <li><a data-toggle="tab" href="#keys">{{ lang._('Keys') }}</a></li>
     <li><a data-toggle="tab" href="#primary-domains">{{ lang._('Primary Zones') }}</a></li>
     <li><a data-toggle="tab" href="#secondary-domains">{{ lang._('Secondary Zones') }}</a></li>
+    <li><a data-toggle="tab" href="#forward-domains">{{ lang._('Forward Zones') }}</a></li>
 </ul>
 
 <div class="tab-content content-box tab-content">
@@ -53,6 +56,35 @@ POSSIBILITY OF SUCH DAMAGE.
                 <hr />
                 <button class="btn btn-primary" id="saveAct_dnsbl" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_dnsbl_progress"></i></button>
             </div>
+        </div>
+    </div>
+    <div id="forwarders" class="tab-pane fade in">
+        <table id="grid-forwarders" class="table table-condensed table-hover table-striped table-responsive" data-editDialog="dialogEditBindForwarder">
+            <thead>
+                <tr>
+                    <th data-column-id="enabled" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
+                    <th data-column-id="ip" data-type="string" data-visible="true">{{ lang._('IP') }}</th>
+                    <th data-column-id="port" data-type="string" data-visible="true">{{ lang._('Port') }}</th>
+                    <th data-column-id="uuid" data-type="string" data-identifier="true" data-visible="false">{{ lang._('ID') }}</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5"></td>
+                    <td>
+                        <button data-action="add" type="button" class="btn btn-xs btn-default"><span class="fa fa-plus"></span></button>
+                        <button data-action="deleteSelected" type="button" class="btn btn-xs btn-default"><span class="fa fa-trash-o"></span></button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="col-md-12">
+            <hr />
+            <button class="btn btn-primary" id="saveAct_forwarder" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_forwarder_progress"></i></button>
+            <br /><br />
         </div>
     </div>
     <div id="acls" class="tab-pane fade in">
@@ -187,11 +219,50 @@ POSSIBILITY OF SUCH DAMAGE.
             <br /><br />
         </div>
     </div>
+    <div id="forward-domains" class="tab-pane fade in">
+        <div class="col-md-12">
+            <h2>{{ lang._('Zones') }}</h2>
+        </div>
+        <table id="grid-forward-domains" class="table table-condensed table-hover table-striped table-responsive" data-editAlert="ChangeMessage" data-editDialog="dialogEditBindForwardDomain">
+            <thead>
+                <tr>
+                    <th data-column-id="enabled" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
+                    <th data-column-id="domainname" data-type="string" data-visible="true">{{ lang._('Zone') }}</th>
+                    <th data-column-id="forwardtype" data-type="string" data-visible="true">{{ lang._('Forward Type') }}</th>
+                    <th data-column-id="forwarders" data-type="string" data-visible="true">{{ lang._('Forwarders') }}</th>
+                    <th data-column-id="uuid" data-type="string" data-identifier="true" data-visible="false">{{ lang._('ID') }}</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5"></td>
+                    <td>
+                        <button data-action="add" type="button" class="btn btn-xs btn-default"><span class="fa fa-plus"></span></button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <hr/>
+        <div class="col-md-12">
+            <div id="ChangeMessage" class="alert alert-info" style="display: none" role="alert">
+                {{ lang._('After changing settings, please remember to apply them with the button below') }}
+            </div>
+            <hr />
+            <button class="btn btn-primary saveAct_domain" type="button"><b>{{ lang._('Save') }}</b> <i class="saveAct_domain_progress"></i></button>
+            <br /><br />
+        </div>
+    </div>
+
 </div>
 
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindAcl,'id':'dialogEditBindAcl','label':lang._('Edit ACL')])}}
+{{ partial("layout_partials/base_dialog",['fields':formDialogEditBindForwarder,'id':'dialogEditBindForwarder','label':lang._('Edit Forwarder')])}}
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindPrimaryDomain,'id':'dialogEditBindPrimaryDomain','label':lang._('Edit Primary Zone')])}}
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindSecondaryDomain,'id':'dialogEditBindSecondaryDomain','label':lang._('Edit Secondary Zone')])}}
+{{ partial("layout_partials/base_dialog",['fields':formDialogEditBindForwardDomain,'id':'dialogEditBindForwardDomain','label':lang._('Edit Forward Zone')])}}
 {{ partial("layout_partials/base_dialog",['fields':formDialogEditBindRecord,'id':'dialogEditBindRecord','label':lang._('Edit Record')])}}
 
 <script>
@@ -217,6 +288,16 @@ $( document ).ready(function() {
             'add':'/api/bind/acl/addAcl/',
             'del':'/api/bind/acl/delAcl/',
             'toggle':'/api/bind/acl/toggleAcl/'
+        }
+    );
+
+    $("#grid-forwarders").UIBootgrid(
+        {   'search':'/api/bind/forwarder/searchForwarder',
+            'get':'/api/bind/forwarder/getForwarder/',
+            'set':'/api/bind/forwarder/setForwarder/',
+            'add':'/api/bind/forwarder/addForwarder/',
+            'del':'/api/bind/forwarder/delForwarder/',
+            'toggle':'/api/bind/forwarder/toggleForwarder/'
         }
     );
 
@@ -261,6 +342,26 @@ $( document ).ready(function() {
         let ids = $("#grid-secondary-domains").bootgrid("getCurrentRows");
         if (ids.length > 0) {
             $("#grid-secondary-domains").bootgrid('select', [ids[0].uuid]);
+        }
+    });
+
+    $("#grid-forward-domains").UIBootgrid({
+        'search':'/api/bind/domain/searchForwardDomain',
+        'get':'/api/bind/domain/getDomain/',
+        'set':'/api/bind/domain/setDomain/',
+        'add':'/api/bind/domain/addForwardDomain/',
+        'del':'/api/bind/domain/delDomain/',
+        'toggle':'/api/bind/domain/toggleDomain/',
+        options:{
+            selection: false,
+            multiSelect: false,
+            rowSelect: false,
+            rowCount: [7,14,20,50,100,-1]
+        }
+    }).on("loaded.rs.jquery.bootgrid", function (e) {
+        let ids = $("#grid-forward-domains").bootgrid("getCurrentRows");
+        if (ids.length > 0) {
+            $("#grid-forward-domains").bootgrid('select', [ids[0].uuid]);
         }
     });
 

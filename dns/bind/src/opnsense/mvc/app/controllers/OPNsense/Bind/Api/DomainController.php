@@ -71,6 +71,30 @@ class DomainController extends ApiMutableModelControllerBase
                 return $record->type->getNodeData()["secondary"]["selected"] === 1;
             }
         );
+    }    
+
+    public function searchForwardDomainAction()
+    {
+        return $this->searchBase(
+            'domains.domain',
+            [   "enabled", "type", "domainname", "forwarders", "forwardtype" ],
+            "domainname",
+            function ($record) {
+                return $record->type->getNodeData()["forward"]["selected"] === 1;
+            }
+        );
+    }
+
+    public function searchForwardDomainAction()
+    {
+        return $this->searchBase(
+            'domains.domain',
+            [   "enabled", "type", "domainname", "forwardip", "forwardtype" ],
+            "domainname",
+            function ($record) {
+                return $record->type->getNodeData()["forward"]["selected"] === 1;
+            }
+        );
     }
 
     public function getDomainAction($uuid = null)
@@ -87,6 +111,11 @@ class DomainController extends ApiMutableModelControllerBase
     public function addSecondaryDomainAction($uuid = null)
     {
         return $this->addBase('domain', 'domains.domain', ['type' => 'secondary']);
+    }
+
+    public function addForwardDomainAction($uuid = null)
+    {
+        return $this->addBase('domain', 'domains.domain', ['type' => 'forward']);
     }
 
     public function delDomainAction($uuid)

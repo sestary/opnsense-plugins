@@ -1,0 +1,31 @@
+<model>
+    <mount>//OPNsense/bind/forwarder</mount>
+    <description>BIND fowarders configuration</description>
+    <version>1.0.0</version>
+    <items>
+        <forwarders>
+            <forwarder type="ArrayField">
+                <enabled type="BooleanField">
+                    <default>1</default>
+                    <Required>Y</Required>
+                </enabled>
+                <ip type="NetworkField">
+                    <default></default>
+                    <FieldSeparator>,</FieldSeparator>
+                    <Required>Y</Required>
+                    <asList>N</asList>
+                    <Constraints>
+                        <check001>
+                            <ValidationMessage>An ACL with this name already exists.</ValidationMessage>
+                            <type>SingleSelectConstraint</type>
+                        </check001>
+                    </Constraints>
+                </ip>
+                <port type="PortField">
+                    <default>53</default>
+                    <Required>N</Required>
+                </port>
+            </forwarder>
+        </forwarders>
+    </items>
+</model>

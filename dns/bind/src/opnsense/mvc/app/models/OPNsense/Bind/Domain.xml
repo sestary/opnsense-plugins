@@ -1,7 +1,7 @@
 <model>
     <mount>//OPNsense/bind/domain</mount>
     <description>BIND domain configuration</description>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <items>
         <domains>
             <domain type="ArrayField">
@@ -15,6 +15,7 @@
                     <OptionValues>
                         <primary>Primary</primary>
                         <secondary>Secondary</secondary>
+                        <forward>Forward</forward>
                     </OptionValues>
                 </type>
                 <primaryip type="NetworkField">
@@ -22,6 +23,26 @@
                     <FieldSeparator>,</FieldSeparator>
                     <asList>Y</asList>
                 </primaryip>
+                <forwardtype type="OptionField">
+                    <default>only</default>
+                    <Required>Y</Required>
+                    <OptionValues>
+                        <only>only</only>
+                        <first>first</first>
+                    </OptionValues>
+                </forwardtype>
+                <forwarders type="ModelRelationField">
+                    <Model>
+                        <template>
+                            <source>OPNsense.Bind.Forwarder</source>
+                            <items>forwarders.forwarder</items>
+                            <display>ip,port</display>
+                            <display_format>%s:%d</display_format>
+                        </template>
+                    </Model>
+                    <Multiple>Y</Multiple>
+                    <Required>N</Required>
+                </forwarders>
                 <transferkeyalgo type="OptionField">
                     <Required>N</Required>
                     <OptionValues>

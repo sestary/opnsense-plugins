@@ -1,0 +1,20 @@
+<form>
+    <field>
+        <id>forwarder.enabled</id>
+        <label>Enabled</label>
+        <type>checkbox</type>
+        <help>This will enable or disable the Forwarder.</help>
+    </field>
+    <field>
+        <id>forwarder.ip</id>
+        <label>IP</label>
+        <type>text</type>
+        <help>The IP address of the forwarder.</help>
+    </field>
+    <field>
+        <id>forwarder.port</id>
+        <label>Port</label>
+        <type>text</type>
+        <help>The port of the forwarder.</help>
+    </field>
+</form>
